@@ -1,0 +1,46 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  nunez_db:
+    image: mariadb
+    volumes:
+      - ./db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - proxy
+    
+  wordpress:
+    depends_on:
+      - nunez_db
+    image: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: nunez_db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - proxy
+    labels:
+      # Service is configured with traefik proxy by the following labels:
+      # Enable treafik to monitor and proxy this service 
+      - "traefik.enable=true"
+      # Here we are defining wich entrypoint should be used by clients to access this service
+      - "traefik.http.routers.webnunez.entrypoints=websecure"
+      - "traefik.http.routers.webnunez.tls=true"
+      - "traefik.http.routers.webnunez.tls.certresolver=certresolver"
+      # Here we define wich network treafik can find this service
+      - "traefik.docker.network=proxy"
+      # This is the port that traefik should proxy
+      - "traefik.http.services.webnunez.loadbalancer.server.port=80"
+      # Domain name
+      - "traefik.http.routers.webnunez.rule=Host(`webnunez.com.localhost`)"
