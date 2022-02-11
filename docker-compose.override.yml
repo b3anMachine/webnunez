@@ -20,6 +20,8 @@ services:
       MYSQL_DATABASE_FILE: /run/secrets/mysql_database
       MYSQL_USER_FILE: /run/secrets/mysql_user
       MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+    volumes:
+      - /var/lib/dbs/nunez_db:/var/lib/mysql
 
   wordpress:
     secrets:
