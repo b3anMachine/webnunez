@@ -37,7 +37,6 @@ services:
       # Here we are defining wich entrypoint should be used by clients to access this service
       - "traefik.http.routers.webnunez.entrypoints=websecure"
       - "traefik.http.routers.webnunez.tls=true"
-      - "traefik.http.routers.webnunez.tls.certresolver=certresolver"
       # Here we define wich network treafik can find this service
       - "traefik.docker.network=proxy"
       # This is the port that traefik should proxy
