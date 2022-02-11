@@ -16,10 +16,10 @@ services:
       - mysql_user
       - mysql_password
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
-      MYSQL_DATABASE_FILE: /run/secrets/mysql_database
-      MYSQL_USER_FILE: /run/secrets/mysql_user
-      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_PASSWORD: /run/secrets/mysql_root_password
+      MYSQL_DATABASE: /run/secrets/mysql_database
+      MYSQL_USER: /run/secrets/mysql_user
+      MYSQL_PASSWORD: /run/secrets/mysql_password
     volumes:
       - /var/lib/dbs/nunez_db:/var/lib/mysql
 
@@ -30,9 +30,9 @@ services:
       - mysql_password
     environment:
       WORDPRESS_DB_HOST: nunez_db
-      WORDPRESS_DB_NAME_FILE: /run/secrets/mysql_database
-      WORDPRESS_DB_USER_FILE: /run/secrets/mysql_user
-      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/mysql_password
+      WORDPRESS_DB_NAME: /run/secrets/mysql_database
+      WORDPRESS_DB_USER: /run/secrets/mysql_user
+      WORDPRESS_DB_PASSWORD: /run/secrets/mysql_password
 
     labels:
       # Domain
