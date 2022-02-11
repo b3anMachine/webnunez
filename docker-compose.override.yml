@@ -1,0 +1,39 @@
+secrets:
+  mysql_root_password:
+    file: /etc/light/nunez_db/mysql_root_password
+  mysql_database:
+    file: /etc/light/nunez_db/mysql_database
+  mysql_user:
+    file: /etc/light/nunez_db/mysql_user
+  mysql_password:
+    file: /etc/light/nunez_db/mysql_password
+
+services:
+  nunez_db:
+    secrets:
+      - mysql_root_password
+      - mysql_database
+      - mysql_user
+      - mysql_password
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE_FILE: /run/secrets/mysql_database
+      MYSQL_USER_FILE: /run/secrets/mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+
+  wordpress:
+    secrets:
+      - mysql_database
+      - mysql_user
+      - mysql_password
+    environment:
+      WORDPRESS_DB_HOST: nunez_db
+      WORDPRESS_DB_NAME_FILE: /run/secrets/mysql_database
+      WORDPRESS_DB_USER_FILE: /run/secrets/mysql_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/mysql_password
+
+    labels:
+      # Domain
+      - "traefik.http.routers.webnunez.rule=Host(`webnunez.com`, `www.webnunez.com`)"
+      #Certresolver
+      - "traefik.http.routers.webnunez.tls.certresolver=prodcertresolver"
