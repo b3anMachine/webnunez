@@ -33,9 +33,9 @@ services:
       WORDPRESS_DB_NAME: /run/secrets/mysql_database
       WORDPRESS_DB_USER: /run/secrets/mysql_user
       WORDPRESS_DB_PASSWORD: /run/secrets/mysql_password
-      WORDPRESS_CONFIG_EXTRA: |
-        define('WP_HOME','https://webnunez.com');
-        define('WP_SITEURL','https:/webnunez.com');
+     # WORDPRESS_CONFIG_EXTRA: |
+      #  define('WP_HOME','https://webnunez.com');
+      #  define('WP_SITEURL','https:/webnunez.com');
     volumes:
       - /var/www/webnunez.com/wordpress:/var/www/html
 
