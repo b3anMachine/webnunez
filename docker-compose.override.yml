@@ -33,6 +33,8 @@ services:
       WORDPRESS_DB_NAME: /run/secrets/mysql_database
       WORDPRESS_DB_USER: /run/secrets/mysql_user
       WORDPRESS_DB_PASSWORD: /run/secrets/mysql_password
+    volumes:
+      - /var/www/webnunez/wordpress:/var/www/html
 
     labels:
       # Domain
