@@ -19,7 +19,7 @@ services:
   wordpress:
     depends_on:
       - nunez_db
-    image: wordpress
+    build: .
     volumes:
       - ./wordpress:/var/www/html
     restart: always
